@@ -6,4 +6,4 @@ jdk:
 before_install:
   - cd java
 
-script: ant build
+script: ant AllTests
