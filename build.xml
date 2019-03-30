@@ -10,6 +10,7 @@
     <property name="debuglevel" value="source,lines,vars"/>
     <property name="target" value="11"/>
     <property name="source" value="11"/>
+	<property name="lib.dir" value="lib" />
     <path id="JUnit 4.libraryclasspath">
         <pathelement location="../../../../../Applications/Eclipse.app/Contents/Eclipse/plugins/org.junit_4.12.0.v201504281640/junit.jar"/>
         <pathelement location="../../../../../Applications/Eclipse.app/Contents/Eclipse/plugins/org.hamcrest.core_1.3.0.v20180420-1519.jar"/>
@@ -30,6 +31,16 @@
         <path refid="java_project_euler.classpath"/>
         <path refid="JUnit 4.libraryclasspath"/>
     </path>
+	<path id="classPath">
+	    <pathelement location="${lib.dir}/junit-4.12.jar" />
+	</path>
+	<target name="test" depends="build">
+	    <junit haltonerror="false" haltonfailure="false" fork="yes">
+	        <classpath path="${lib.dir}">
+	            <path refid="classPath" />
+	        </classpath>
+	    </junit>
+	</target>
     <target name="init">
         <mkdir dir="bin"/>
         <copy includeemptydirs="false" todir="bin">
@@ -86,7 +97,9 @@
             <formatter type="xml"/>
             <test name="test.AllTests" todir="${junit.output.dir}"/>
             <jvmarg line="-ea"/>
-            <classpath refid="run.AllTests.classpath"/>
+        	<classpath path="${lib.dir}">
+	            <path refid="classPath" />
+	        </classpath>
         </junit>
     </target>
     <target name="junitreport">
