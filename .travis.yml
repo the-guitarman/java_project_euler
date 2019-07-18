@@ -1,11 +1,10 @@
 dist: xenial
 language: java
 before_install:
-  - wget https://archive.apache.org/dist/ant/binaries/apache-ant-1.10.5-bin.tar.gz
-  - sudo tar -xf apache-ant-1.10.5-bin.tar.gz -C /usr/local
-  - sudo ln -s /usr/local/apache-ant-1.10.5/ /usr/local/ant
-  - sudo chmod a+rwx /usr/local/ant
-  - ant -version
+  - wget --no-check-certificate https://archive.apache.org/dist/ant/binaries/apache-ant-1.10.5-bin.tar.gz
+  - tar -xzvf apache-ant-1.10.5-bin.tar.gz
+  - export PATH=`pwd`/apache-ant-1.10.5/bin:$PATH
+  - echo $(ant -version)
 env:
   - SH=bash
   - ANT_HOME=/usr/local/ant
