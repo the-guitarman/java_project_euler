@@ -1,4 +1,14 @@
+dist: xenial
 language: java
+before_install:
+  - wget https://archive.apache.org/dist/ant/binaries/apache-ant-1.10.5-bin.tar.gz
+  - tar -xf apache-ant-1.10.5-bin.tar.gz -C /usr/local
+  - ln -s /usr/local/apache-ant-1.10.5/ /usr/local/ant
+  - ant -version
+env:
+  - SH=bash
+  - ANT_HOME=/usr/local/ant
+  - PATH=/usr/local/ant/bin:${PATH}
 install: ant 
 
 jdk:
