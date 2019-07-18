@@ -1,15 +1,13 @@
 dist: xenial
+
 language: java
+
 before_install:
   - wget --no-check-certificate https://archive.apache.org/dist/ant/binaries/apache-ant-1.10.5-bin.tar.gz
   - tar -xzvf apache-ant-1.10.5-bin.tar.gz
   - export PATH=`pwd`/apache-ant-1.10.5/bin:$PATH
+  - export ANT_HOME=`pwd`/apache-ant-1.10.5
   - echo $(ant -version)
-env:
-  - SH=bash
-  - ANT_HOME=/usr/local/ant
-  - PATH=/usr/local/ant/bin:${PATH}
-install: ant 
 
 jdk:
   - oraclejdk11
