@@ -1,5 +1,6 @@
-package task_001_multiples_of_3_and_5_under_1000;
+package main;
 
+import task_001_multiples_of_3_and_5_under_1000.Task001;
 import task_002_even_fibonacci_terms_under_4_000_000.Task002;
 
 public class ProjectEuler {
