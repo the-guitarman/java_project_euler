@@ -3,14 +3,12 @@
               Any modifications will be overwritten.
               To include a user specific buildfile here, simply create one in the same
               directory with the processing instruction <?eclipse.ant.import?>
-              as the first entry and export the buildfile again. -->
-<project basedir="." default="build" name="java_project_euler">
+              as the first entry and export the buildfile again. --><project basedir="." default="build" name="java_project_euler">
     <property environment="env"/>
     <property name="junit.output.dir" value="junit"/>
     <property name="debuglevel" value="source,lines,vars"/>
     <property name="target" value="11"/>
     <property name="source" value="11"/>
-	<property name="lib.dir" value="lib" />
     <path id="JUnit 4.libraryclasspath">
         <pathelement location="../../../../../Applications/Eclipse.app/Contents/Eclipse/plugins/org.junit_4.12.0.v201504281640/junit.jar"/>
         <pathelement location="../../../../../Applications/Eclipse.app/Contents/Eclipse/plugins/org.hamcrest.core_1.3.0.v20180420-1519.jar"/>
@@ -18,29 +16,38 @@
     <path id="java_project_euler.classpath">
         <pathelement location="bin"/>
         <path refid="JUnit 4.libraryclasspath"/>
-    </path>
-    <path id="run.ProjectEuler.classpath">
-        <path refid="java_project_euler.classpath"/>
-        <path refid="JUnit 4.libraryclasspath"/>
-    </path>
-    <path id="run.Task001Test.classpath">
-        <path refid="java_project_euler.classpath"/>
-        <path refid="JUnit 4.libraryclasspath"/>
+        <pathelement location="lib/junit-4.12.jar"/>
     </path>
     <path id="run.AllTests.classpath">
         <path refid="java_project_euler.classpath"/>
         <path refid="JUnit 4.libraryclasspath"/>
+        <pathelement location="lib/junit-4.12.jar"/>
     </path>
-	<path id="classPath">
-	    <pathelement location="${lib.dir}/junit-4.12.jar" />
-	</path>
-	<target name="test" depends="build">
-	    <junit haltonerror="false" haltonfailure="false" fork="yes">
-	        <classpath path="${lib.dir}">
-	            <path refid="classPath" />
-	        </classpath>
-	    </junit>
-	</target>
+    <path id="run.ProjectEuler.classpath">
+        <path refid="java_project_euler.classpath"/>
+        <path refid="JUnit 4.libraryclasspath"/>
+        <pathelement location="lib/junit-4.12.jar"/>
+    </path>
+    <path id="run.Task001Test.classpath">
+        <path refid="java_project_euler.classpath"/>
+        <path refid="JUnit 4.libraryclasspath"/>
+        <pathelement location="lib/junit-4.12.jar"/>
+    </path>
+    <path id="run.ProjectEuler (1).classpath">
+        <path refid="java_project_euler.classpath"/>
+        <path refid="JUnit 4.libraryclasspath"/>
+        <pathelement location="lib/junit-4.12.jar"/>
+    </path>
+    <path id="run.Task002Test.classpath">
+        <path refid="java_project_euler.classpath"/>
+        <path refid="JUnit 4.libraryclasspath"/>
+        <pathelement location="lib/junit-4.12.jar"/>
+    </path>
+    <path id="run.ProjectEuler (2).classpath">
+        <path refid="java_project_euler.classpath"/>
+        <path refid="JUnit 4.libraryclasspath"/>
+        <pathelement location="lib/junit-4.12.jar"/>
+    </path>
     <target name="init">
         <mkdir dir="bin"/>
         <copy includeemptydirs="false" todir="bin">
@@ -77,6 +84,15 @@
         <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
         <antcall target="build"/>
     </target>
+    <target name="AllTests">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="test.AllTests" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="run.AllTests.classpath"/>
+        </junit>
+    </target>
     <target name="ProjectEuler">
         <java classname="task_001_multiples_of_3_and_5_under_1000.ProjectEuler" failonerror="true" fork="yes">
             <classpath refid="run.ProjectEuler.classpath"/>
@@ -91,16 +107,24 @@
             <classpath refid="run.Task001Test.classpath"/>
         </junit>
     </target>
-    <target name="AllTests">
+    <target name="ProjectEuler (1)">
+        <java classname="ProjectEuler" failonerror="true" fork="yes">
+            <classpath refid="run.ProjectEuler (1).classpath"/>
+        </java>
+    </target>
+    <target name="Task002Test">
         <mkdir dir="${junit.output.dir}"/>
         <junit fork="yes" printsummary="withOutAndErr">
             <formatter type="xml"/>
-            <test name="test.AllTests" todir="${junit.output.dir}"/>
+            <test name="test.Task002Test" todir="${junit.output.dir}"/>
             <jvmarg line="-ea"/>
-        	<classpath path="${lib.dir}">
-	            <path refid="classPath" />
-	        </classpath>
+            <classpath refid="run.Task002Test.classpath"/>
         </junit>
+    </target>
+    <target name="ProjectEuler (2)">
+        <java classname="main.ProjectEuler" failonerror="true" fork="yes">
+            <classpath refid="run.ProjectEuler (2).classpath"/>
+        </java>
     </target>
     <target name="junitreport">
         <junitreport todir="${junit.output.dir}">
